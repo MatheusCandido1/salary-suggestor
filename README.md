@@ -15,3 +15,11 @@
 
 ### 5 - Run: 
 ```python main.py```
+
+### Authors
+Matheus Candido Carvalho - @MatheusCandido1
+Amber Upton
+Fatima Gonzales
+Javier Segura
+Sweastik Pokhrel
+

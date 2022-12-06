@@ -9,6 +9,7 @@ def create_tables():
   create_candidates_table()
   # Call the functions to create the `proposals` table
   create_proposals_table()
+  print('Tables created successfully')
 
 # Define function to create the companies table
 def create_companies_table():

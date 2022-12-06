@@ -18,4 +18,4 @@ def companies_seeder():
   # Commit the changes
   connect.db.commit()
   # Print the message so the user knows the database has been populated
-  print('DB Populated.')
+  print('Seeds created successfully.')

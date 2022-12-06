@@ -4,7 +4,7 @@
 """
 import os
 from controllers import company_controller, candidate_controller, proposal_controller
-from utils import suggestor, pdf
+from utils import suggestor, pdf, chart
 
 def clear_terminal():
   if os.name == 'nt':
@@ -558,6 +558,7 @@ def manage_companies():
 # STATISTICS
 def display_statistics():
   print('\nStatistics\n')
+  chart.generate_chart()
   go_back()
 
 # MAIN APPLICATION

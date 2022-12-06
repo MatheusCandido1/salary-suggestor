@@ -2,7 +2,7 @@
 import tables, init, seeds
 
 # Run the create_database function inside the file init.py
-init.create_database()
+init.use_database()
 
 # Run the create_tables function inside the file tables.py
 tables.create_tables()

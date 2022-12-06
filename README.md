@@ -18,8 +18,11 @@
 
 ### Authors
 Matheus Candido Carvalho - @MatheusCandido1
-Amber Upton
-Fatima Gonzales
-Javier Segura
-Sweastik Pokhrel
 
+Amber Upton
+
+Fatima Gonzales
+
+Javier Segura
+
+Sweastik Pokhrel

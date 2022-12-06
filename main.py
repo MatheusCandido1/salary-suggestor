@@ -2,9 +2,15 @@
 * Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
 * Date: 12-03-2022
 """
+import os
 from controllers import company_controller, candidate_controller, proposal_controller
 from utils import suggestor, pdf
 
+def clear_terminal():
+  if os.name == 'nt':
+    os.system('cls')
+  else:
+    os.system('clear')
 
 
 companyId = 1
@@ -49,7 +55,7 @@ def show_candidates_menu():
   print ('2 - View Candidates')
   print ('3 - Update Existing Candidate')
   print ('4 - Delete Existing Candidate')
-  print ('5 - Go Back\n')
+  print ('5 - Return to Main Menu\n')
 
 def update_candidate():
   print('Please enter the ID of the candidate you wish to update.')
@@ -158,6 +164,7 @@ def create_new_candidate():
   else:
     candidate['employment_type'] = 'CT'
   candidate_controller.store(candidate)
+  manage_candidates()
     
 def view_candidates():
   result = candidate_controller.index()
@@ -168,6 +175,7 @@ def view_candidates():
     print('------------------------------------------------------------------------------------------------------------------------')
     for candidate in result:
       print(str(candidate[0]).ljust(3), str(candidate[1]).ljust(20), str(candidate[2]).ljust(20), str(candidate[3]).ljust(20), str(candidate[4]).ljust(12), str(get_experience_level_label(candidate[5])).ljust(16), str(get_employment_type_label(candidate[6])).ljust(3))
+  manage_candidates()
     
 def update_existing_candidate(candidate):  
   updatedCandidate = {
@@ -328,6 +336,7 @@ def create_new_proposal(company):
       manage_proposals(selectedCompany)
 
   proposal_controller.store(proposal)
+  manage_proposals(masterCompany)
 
 def delete_proposal():
   print('Please enter the ID of the proposal you wish to delete.')
@@ -341,7 +350,7 @@ def delete_proposal():
     print('\nSelected Proposal Information: ')
     print('ID: '.ljust(18), currentProposal[1])
     print('Candidate Name: '.ljust(18), currentProposal[6])
-    print('Proposal Date: '.ljust(18), currentProposal[2])
+    print('Proposal Date: '.ljust(18), currentProposal[2].strftime("%B %d, %Y"))
     print('Job Title: '.ljust(18), currentProposal[3])
     print('Salary Offered: '.ljust(18), format_salary(currentProposal[4]))
 
@@ -357,17 +366,29 @@ def delete_proposal():
   manage_proposals(masterCompany)
 
 def view_proposal(company):
-  print('Please enter the ID of the proposal you wish to view.')
+  proposals = proposal_controller.index()
+  if len(proposals) == 0:
+    print('There are no proposals.')
+  else:
+    print("Proposal ID".ljust(11), "Candidate".ljust(20), "Proposal Date".ljust(20), "Salary Offered".ljust(20), "Status".ljust(20))
+    print('---------------------------------------------------------------------------------------------')
+    for proposal in proposals:
+      print(str(proposal[0]).ljust(11), proposal[6].ljust(20), proposal[2].strftime("%B %d, %Y").ljust(20), str(format_salary(proposal[4]).ljust(20)), proposal[5].ljust(20))
+  
+  
+  print('\nPlease enter the ID of the proposal you wish to view (or enter 0 to go back).')
   proposalId = input()
   while proposalId == '':
     print('Proposal ID cannot be empty. Please enter again:')
     proposalId = input()
-
+  if proposalId == '0':
+    manage_proposals(company)
   currentProposal = proposal_controller.show(proposalId)
   if currentProposal:
     print('\nSelected Proposal Information: ')
     print('ID: '.ljust(18), currentProposal[0])
-    print('Proposal Date: '.ljust(18), currentProposal[2])
+    print('Candidate Name: '.ljust(18), currentProposal[6])
+    print('Proposal Date: '.ljust(18), currentProposal[2].strftime("%B %d, %Y"))
     print('Job Title: '.ljust(18), currentProposal[3])
     print('Salary Offered: '.ljust(18), currentProposal[4])
     print('Status: '.ljust(18), currentProposal[5])
@@ -412,7 +433,7 @@ def update_existing_proposal():
   if currentProposal:
     print('\nSelected Proposal Information: ')
     print('ID: '.ljust(18), currentProposal[1])
-    print('Proposal Date: '.ljust(18), currentProposal[2])
+    print('Proposal Date: '.ljust(18), currentProposal[2].strftime("%B %d, %Y"))
     print('Job Title: '.ljust(18), currentProposal[3])
     print('Salary Offered: '.ljust(18), currentProposal[4])
     print('Status: '.ljust(18), currentProposal[5])
@@ -453,10 +474,10 @@ def update_existing_proposal():
 def show_proposals_menu():
     print ('\nManage Proposals\n')
     print ('1 - Create New Proposal')
-    print ('2 - View Proposal')
+    print ('2 - View Proposals')
     print ('3 - Update Existing Proposal')
     print ('4 - Delete Existing Proposal')
-    print ('5 - Go Back\n')
+    print ('5 - Return to Main Menu\n')
 
 def manage_proposals(company):
   show_proposals_menu()
@@ -536,7 +557,8 @@ def manage_companies():
 
 # STATISTICS
 def display_statistics():
-  print('Chart')
+  print('\nStatistics\n')
+  go_back()
 
 # MAIN APPLICATION
 def show_main_menu():
@@ -548,6 +570,8 @@ def show_main_menu():
   print('5 - Exit \n')
 
 def bootstrap():
+  clear_terminal()
+
   print('Welcome to the Salary Suggestor')
   show_main_menu()
 

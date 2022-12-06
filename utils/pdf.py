@@ -3,7 +3,6 @@
 from fpdf import FPDF
 from fpdf.html import hex2dec
 from datetime import date
-import os
 
 sign = 'If you choose to accept this job offer, please sign the second copy of this letter and return it to me at your earliest convenience.'
 
@@ -65,7 +64,7 @@ def generate(company, candidate, proposal):
     pdf.set_line_width(2)
     #set the line
     pdf.line(x1 = 15, y1 = 23, x2 = 190, y2 = 23)
-    #set margin
+    #set mar gin
     pdf.set_left_margin(15)
 
     pdf.set_font("times", size = 12)
@@ -101,5 +100,6 @@ def generate(company, candidate, proposal):
     pdf.cell(180, 5, txt = pdfData['companyName'] ,ln = 2)
     pdf.cell(180, 5, txt = pdfData['companyAddress'] + ", " + pdfData['city'] ,ln = 2)
     # save the pdf with name .pdf
-    pdf.output("Proposal.pdf")
-    os.system('Proposal.pdf')
+    filename = pdfData['recipientName'] + pdfData['jobTitle'] + "Proposal.pdf"
+    filename = filename.replace(" ", "")
+    pdf.output(filename)

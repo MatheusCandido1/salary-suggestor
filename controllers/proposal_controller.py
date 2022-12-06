@@ -1,29 +1,71 @@
+# Import the connect.py file from the database folder
 from database import connect
 
-def store(date, candidate_id, job_title, salary, status):
-  sql = "INSERT INTO proposals (date, candidate_id, job_title, salary, status) VALUES (%s, %s, %s, %s, %s)"
-  val = (date, candidate_id, job_title, salary, status)
-  connect.mycursor.execute(sql, val)
-  connect.mydb.commit()
-  
-  print(connect.mycursor.rowcount, "proposal saved.")
+# Define a function to store a proposal receiving a proposal object
+def store(proposal):
+  # Define the query to insert a proposal
+  sql = "INSERT INTO proposals (candidate_id, job_title, salary, status) VALUES (%s, %s, %s, %s)"
+  # Define the values to insert a proposal
+  values = tuple(proposal.values())
+  # Execute the query
+  connect.cursor.execute(sql, values)
+  # Commit the changes
+  connect.db.commit()
+  # Print the message so the user knows the proposal has been created
+  print("Proposal created successfully.")
 
+# Define a function to get all proposals
 def index():
-  connect.mycursor.execute("SELECT * FROM proposals")
-  result = connect.mycursor.fetchall()
+  # Define the query to get all proposals
+  connect.cursor.execute("SELECT * FROM proposals")
+  # Fetch all the proposals
+  result = connect.cursor.fetchall()
+  # Return the result
   return result
 
-def show(id):
-  sql = "SELECT * FROM proposals WHERE id = %s"
-  val = (id,)
-  connect.mycursor.execute(sql, val)
-  result = connect.mycursor.fetchone()
+# Define a function to get a proposal by id receiving a proposalId
+def show(proposalId):
+  # Define the query to get a proposal by id
+  sql = "SELECT proposals.id as proposal_id, candidate_id, proposal_date, job_title, salary, status, name, address, experience_level, employment_type FROM proposals INNER JOIN candidates ON proposals.candidate_id = candidates.id WHERE proposals.id = %s"
+  # Define the value to get a proposal by id
+  val = (proposalId,)
+  # Execute the query
+  connect.cursor.execute(sql, val)
+  # Fetch the proposal result
+  result = connect.cursor.fetchone()
+  # Return the result
   return result
 
+# Define a function to update a proposal receiving a proposal object
 def update(proposal):
-  sql = "UPDATE proposals SET date = %s, job_title = %s, salary = %s, status = %s WHERE id = %s"
-  val = (proposal['date'], proposal['job_title'], proposal['salary'], proposal['status'], proposal['id'])
-  connect.mycursor.execute(sql, val)
-  connect.mydb.commit()
+  # Define the query to update a proposal
+  query = "UPDATE proposals SET candidate_id = %s, proposal_date = %s, job_title = %s, salary = %s, status = %s WHERE id = %s"
+  # Define the values to update a proposal
+  attrs = list(proposal.values())
+  # Save the proposalId
+  proposalId = attrs[0]
+  # Remove the proposalId from the beginning of the list
+  attrs.pop(0)
+  # Append the proposalId to the end of the list
+  attrs.append(proposalId)
+  # Convert the list to a tuple
+  values = tuple(attrs,)
+  # Execute the query
+  connect.cursor.execute(query, values)
+  # Commit the changes
+  connect.db.commit()
+  # Print the message so the user knows the proposal has been updated
+  print('Proposal updated successfully.')
 
-  print(connect.mycursor.rowcount, "proposal updated.")
+# Define a function to delete a proposal receiving a proposalId
+def delete(proposalId):
+  # Define the query to delete a proposal
+  query = 'DELETE FROM proposals WHERE id = %s'
+  # Define the value to delete a proposal
+  value = (proposalId,)
+  # Execute the query
+  connect.cursor.execute(query, value)
+  # Commit the changes
+  connect.db.commit()
+  # Print the message so the user knows the proposal has been deleted
+  print('Proposal has been deleted.')

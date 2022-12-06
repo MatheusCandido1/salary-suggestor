@@ -1,10 +1,13 @@
+# Import mysql.connector
 import mysql.connector
 
-mydb = mysql.connector.connect(
+# Connect to the database using the credentials
+db = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="",
+  password="dbsecret",
   database="db_salarysuggestor"
 )
 
-mycursor = mydb.cursor()
+# Create a cursor
+cursor = db.cursor()

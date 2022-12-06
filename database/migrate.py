@@ -8,5 +8,5 @@ init.use_database()
 tables.create_tables()
 
 # Run the companies_seeder function inside the file seeds.py
-seeds.companies_seeder()
+seeds.seed()
 

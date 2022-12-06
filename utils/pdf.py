@@ -4,13 +4,18 @@ from fpdf import FPDF
 from fpdf.html import hex2dec
 from datetime import date
 
+# Define the text for the letter
 sign = 'If you choose to accept this job offer, please sign the second copy of this letter and return it to me at your earliest convenience.'
 
+# Define the text for the letter
 acknowledgment = 'When your acknowledgment is received, we will send you employee benefit enrollment forms and an employee handbook that details our benefit plans and retirement plan. We look forward to welcoming you at our company.'
 
+# Define the text for the letter
 information = 'Please let me know if you have any questions or if I can provide any additional information.'
 
+# Create a class that inherits from FPDF
 class PDF(FPDF):
+    # Override the header function
     def header(self):
         #font
         self.set_font('times', 'B', 18)
@@ -20,7 +25,8 @@ class PDF(FPDF):
         self.cell(0,15,"JOB OFFER LETTER", border= False, ln=1, align='L')
         #line break
         self.ln(10)
-        
+
+    # Override the body function
     def body(self, name):
         #read text file
         with open(name, 'rb') as fh:
@@ -31,11 +37,14 @@ class PDF(FPDF):
         self.multi_cell(180,5,txt)
         #line break
         self.ln(6)
-        
+
+# Define function to format currency      
 def format_currency(value):
     return f"${value:,.2f}"
 
+# Define function to generate the pdf
 def generate(company, candidate, proposal):
+    # Store the data in a dictionary
     pdfData = {
         "recipientName": candidate['name'],
         "jobTitle": proposal['job_title'],
@@ -83,7 +92,7 @@ def generate(company, candidate, proposal):
     # add another cell
     pdf.cell(180, 15, txt = "Dear " + pdfData['recipientName'] + "," ,ln = 1)
 
-
+    # set style and size of font
     pdf.multi_cell(180,5, txt= pdfData['companyName'] + "is pleased to offer you the position of " + pdfData['jobTitle'] + ". Your skills and experience will be ideal fit for our company." )
     pdf.ln(4)
     pdf.multi_cell(180,5, txt="As we discussed, your starting date will be " + pdfData['startDate'] + ". The starting salary is " +format_currency(pdfData['salary'])+" per year and is paid on a weekly basis. Direct deposit is available." )

@@ -534,6 +534,10 @@ def manage_companies():
   else:
     go_back()
 
+# STATISTICS
+def display_statistics():
+  print('Chart')
+
 # MAIN APPLICATION
 def show_main_menu():
   print('\nMenu:')
@@ -550,7 +554,7 @@ def bootstrap():
   print ('Please enter the option:')
   option = input()
 
-  while option not in ['1', '2', '3', '4']:
+  while option not in ['1', '2', '3', '4', '5']:
     print('Please enter a valid option:')
     show_main_menu()
     option = input()
@@ -562,6 +566,8 @@ def bootstrap():
   if option == '3':
     manage_proposals(masterCompany)
   if option == '4':
+    display_statistics()
+  if option == '5':
     print('Thank you for using our software!')
     exit()
 

@@ -479,11 +479,11 @@ def view_proposal(company):
   # Print the proposals
   else:
     # Print the header
-    print("Proposal ID".ljust(11), "Candidate".ljust(20), "Proposal Date".ljust(20), "Salary Offered".ljust(20), "Status".ljust(20))
+    print("Proposal ID".ljust(11), "Candidate".ljust(30), "Proposal Date".ljust(20), "Salary Offered".ljust(20), "Status".ljust(20))
     print('---------------------------------------------------------------------------------------------')
     # Loop through the proposals
     for proposal in proposals:
-      print(str(proposal[0]).ljust(11), proposal[6].ljust(20), proposal[2].strftime("%B %d, %Y").ljust(20), str(format_salary(proposal[4]).ljust(20)), proposal[5].ljust(20))
+      print(str(proposal[0]).ljust(11), proposal[6].ljust(30), proposal[2].strftime("%B %d, %Y").ljust(20), str(format_salary(proposal[4]).ljust(20)), proposal[5].ljust(20))
   
   # Get the proposal ID
   print('\nPlease enter the ID of the proposal you wish to view (or enter 0 to go back).')

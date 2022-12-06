@@ -24,4 +24,4 @@ def create_candidates_table():
 # Define function to create the proposals table
 def create_proposals_table():
   # Create the `proposals` table if it doesn't exist
-  cursor.execute("CREATE TABLE IF NOT EXISTS proposals (id int(11) primary key not null auto_increment, candidate_id int(11), proposal_date datetime default now(), job_title VARCHAR(100), salary float(10,2), status VARCHAR(20), foreign key (candidate_id) references candidates(id))")
+  cursor.execute("CREATE TABLE IF NOT EXISTS proposals (id int(11) primary key not null auto_increment, candidate_id int(11), proposal_date datetime default now(), job_title VARCHAR(100), salary float(10,2), status VARCHAR(20), foreign key (candidate_id) references candidates(id) on delete cascade)")

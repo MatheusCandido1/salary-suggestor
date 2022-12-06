@@ -10,6 +10,8 @@ def seed():
   companies_seeder()
   # Call the candidates_seeder function
   candidates_seeder()
+  # Call the proposal_seeder function
+  proposal_seeder()
 
 # Define function to populate the companies table
 def companies_seeder():
@@ -86,3 +88,26 @@ def candidates_seeder():
     
   # Print the message so the user knows the database has been populated
   print('Candidates created successfully.')
+
+def proposal_seeder():
+  # Define the query
+  query = "INSERT INTO proposals (candidate_id, job_title, salary, status) VALUES (%s, %s, %s, %s)"
+  # Define the possible values for job_title and status
+  jobTitle = ['Software Engineer', 'Software Developer', 'Data Scientist', 'Data Engineer', 'IA Consultant', 'Machile Learning Developer', 'Data Analyist']
+  status = ['PENDING', 'ACCEPTED', 'DECLINED']
+  # Loop through the range of 1 to 201
+  for i in range(1, 201):
+    currentCandidate = i
+    salary = random.randint(50000, 500000)
+    # Define the values getting a random value from jobTitle
+    proposal = (
+      currentCandidate,
+      random.choice(jobTitle),
+      salary,
+      random.choice(status),
+    )
+    # Execute the query
+    connect.cursor.execute(query, proposal)
+    # Commit the changes
+    connect.db.commit()
+  print('Proposals created successfully.')

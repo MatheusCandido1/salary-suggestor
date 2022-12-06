@@ -85,4 +85,6 @@ usData=usData.drop('experience_level', axis=1)
 usData=usData.drop('employment_type', axis=1)
 usData   
 #writing new csv file
+print('Writing new csv file')
 usData.to_csv('new_salaries.csv')
+print('New file named new_salaries.csv was created successfully')

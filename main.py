@@ -4,7 +4,7 @@
 """
 import os
 from controllers import company_controller, candidate_controller, proposal_controller
-from utils import suggestor, pdf, chart
+from utils import suggestor, pdf, statistics
 
 def clear_terminal():
   if os.name == 'nt':
@@ -554,8 +554,20 @@ def manage_companies():
 
 # STATISTICS
 def display_statistics():
-  print('\nStatistics\n')
-  chart.generate_chart()
+  statistics.generate_statistics()
+
+  print('\n1 - Generate Chart')
+  print('2 - Return to Main Menu\n')
+
+  print ('Please enter the option:')
+  option = input()
+  while option not in ['1', '2']:
+    print ('Please enter a valid option:')
+    option = input()
+  
+  if option == '1':
+    statistics.generate_chart()
+    
   go_back()
 
 # MAIN APPLICATION

@@ -18,12 +18,13 @@ def companies_seeder():
   # Define the query
   query = 'INSERT INTO companies (name, address, city, color, benefits, employees) VALUES (%s, %s, %s, %s, %s, %s)'
   # Define the values 
+  fakeBenefits = "Full family medical coverage will be provided through our company's employee benefit plan and will be effective on June 1. Dental and optical insurance are also available. The company offers a flexible paid time-off plan which includes vacation, personal and sick leave. Time off accrues at the rate of one day per month for your first year, then increased based on your tenure with the company. Eligibility for the company retirement plan begins 90 days after your start date"
   values = [(
     'UNLV', 
     '4505 S Maryland Pkwy', 
     'Las Vegas', 
     '#cf2030', 
-    "Full family medical coverage will be provided through our company's employee benefit plan and will be effective on June 1. Dental and optical insurance are also available. The company offers a flexible paid time-off plan which includes vacation, personal and sick leave. Time off accrues at the rate of one day per month for your first year, then increased based on your tenure with the company. Eligibility for the company retirement plan begins 90 days after your start date",
+    fakeBenefits,
     12000
   ),
   (
@@ -31,7 +32,7 @@ def companies_seeder():
     'One Hacker Way',
     'Menlo Park',
     '#578bd1',
-    "Full family medical coverage will be provided through our company's employee benefit plan and will be effective on June 1. Dental and optical insurance are also available. The company offers a flexible paid time-off plan which includes vacation, personal and sick leave. Time off accrues at the rate of one day per month for your first year, then increased based on your tenure with the company. Eligibility for the company retirement plan begins 90 days after your start date",
+    fakeBenefits,
     40000
   ),
   (
@@ -39,12 +40,36 @@ def companies_seeder():
     '150 Greenwich Street',
     'New York',
     '#59d955',
-    "Full family medical coverage will be provided through our company's employee benefit plan and will be effective on June 1. Dental and optical insurance are also available. The company offers a flexible paid time-off plan which includes vacation, personal and sick leave. Time off accrues at the rate of one day per month for your first year, then increased based on your tenure with the company. Eligibility for the company retirement plan begins 90 days after your start date",
+    fakeBenefits,
     25
   )
   ]
   # Loop through the values
   for value in values:
+    # Execute the query
+    connect.cursor.execute(query, value)
+
+  faker = Faker(locale='en_US')
+  for _ in range(4, 201):
+    # Generate fake name
+    fakeName = faker.company()
+    # Generate fake address
+    fakeAddress = faker.street_address()
+    # Generate fake city
+    fakeCity = faker.city()
+    # Generate fake color
+    fakeColor = faker.hex_color()
+    # Generate fake employees
+    fakeEmployees = faker.random_int(min=1, max=60)
+    # Define the values
+    value = (
+      fakeName,
+      fakeAddress,
+      fakeCity,
+      fakeColor,
+      fakeBenefits,
+      fakeEmployees,
+    )
     # Execute the query
     connect.cursor.execute(query, value)
     # Commit the changes
@@ -63,7 +88,7 @@ def candidates_seeder():
   # Create a Faker instance
   faker = Faker(locale='en_US')
   # Loop through the range of 1 to 201
-  for i in range(1, 201):
+  for _ in range(1, 201):
     # Generate fake name
     fakeName = faker.name()
     # Generate fake address

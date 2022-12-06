@@ -271,7 +271,7 @@ def format_salary(salary):
 
 def get_salary_suggestion(candidate, company):
   value = suggestor.get_salary_suggestion(candidate, company)
-  return (value['min'], value['max'])
+  return value
 
 def create_new_proposal(company):
   candidateId = input('Please enter the ID of the candidate: ')
@@ -280,62 +280,59 @@ def create_new_proposal(company):
     candidateId = input('Please enter the ID of the candidate: ')
 
   candidate = candidate_controller.show(candidateId)
-  if candidate == None:
+  if not candidate:
     print('Candidate not found.')
-    return
-  
-  
-  print('\nSelected Candidate Information: ')
-  print('Name: '.ljust(18), candidate[1])
-  print('Address: '.ljust(18), candidate[2])
-  print('Email: '.ljust(18), candidate[3])
-  print('Phone: '.ljust(18), candidate[4])
-  print('Experience Level: '.ljust(18), get_experience_level_label(candidate[5]))
-  print('Employment Type:'.ljust(18), get_employment_type_label(candidate[6]))
-  print('\nCreate New Proposal\n')
+  else:
+    print('\nSelected Candidate Information: ')
+    print('Name: '.ljust(18), candidate[1])
+    print('Address: '.ljust(18), candidate[2])
+    print('Email: '.ljust(18), candidate[3])
+    print('Phone: '.ljust(18), candidate[4])
+    print('Experience Level: '.ljust(18), get_experience_level_label(candidate[5]))
+    print('Employment Type:'.ljust(18), get_employment_type_label(candidate[6]))
+    print('\nCreate New Proposal\n')
 
-  proposal = {
-    'candidate_id': candidateId,
-    'job_title': '',
-    'salary': '',
-    'status': 'PENDING'
-  }
+    proposal = {
+      'candidate_id': candidateId,
+      'job_title': '',
+      'salary': '',
+      'status': 'PENDING'
+    }
 
-  print('Please enter the job title:')
-  proposal['job_title'] = input()
-
-  if proposal['job_title'] == '':
-    print('Job title cannot be empty.')
+    print('Please enter the job title:')
     proposal['job_title'] = input()
 
-  selectedCompany = {
-    'employees': company[6],
-  }
+    if proposal['job_title'] == '':
+      print('Job title cannot be empty.')
+      proposal['job_title'] = input()
 
-  selectedCandidate = {
-    'experience_level': candidate[5],
-    'employment_type': candidate[6],
-  }
+    selectedCompany = {
+      'employees': company[6],
+    }
 
-  salaryRange = get_salary_suggestion(selectedCandidate, selectedCompany)
-  print('For this candidate, we suggest a salary range of ' + str(format_salary(salaryRange[0])) + ' to ' + str(format_salary(salaryRange[1])) + '.')
+    selectedCandidate = {
+      'experience_level': candidate[5],
+      'employment_type': candidate[6],
+    }
 
-  print('Please enter the salary:')
-  proposal['salary'] = input()
-  if proposal['salary'] == '':
-    print('Salary cannot be empty.')
-    proposal['salary'] = input()
+    salarySuggestion = get_salary_suggestion(selectedCandidate, selectedCompany)
+    print('For this candidate, we suggest a salary of ' + str(format_salary(salarySuggestion)) + '.')
 
-  if float(proposal['salary']) < salaryRange[0] or float(proposal['salary']) > salaryRange[1]:
-    print('The salary you entered is outside the suggested range. Are you sure you want to continue? (Y/N)')
-    confirmation = input()
-    while confirmation not in ['Y', 'y', 'N', 'n']:
-      print('Please enter a valid option: (Y/N)')
+    proposal['salary'] = input('If you want to accept the suggested salary, press enter. Otherwise, enter the salary you want to propose.') or salarySuggestion
+    if proposal['salary'] == '':
+      print('Salary cannot be empty.')
+      proposal['salary'] = input()
+
+    if float(proposal['salary']) < salarySuggestion:
+      print('The salary you entered is less than the suggested. Are you sure you want to continue? (Y/N)')
       confirmation = input()
-    if confirmation in ['N', 'n']:
-      manage_proposals(selectedCompany)
+      while confirmation not in ['Y', 'y', 'N', 'n']:
+        print('Please enter a valid option: (Y/N)')
+        confirmation = input()
+      if confirmation in ['N', 'n']:
+        manage_proposals(selectedCompany)
 
-  proposal_controller.store(proposal)
+    proposal_controller.store(proposal)
   manage_proposals(masterCompany)
 
 def delete_proposal():
@@ -593,7 +590,7 @@ def bootstrap():
   if option == '4':
     display_statistics()
   if option == '5':
-    print('Thank you for using our software!')
+    print('Thank you for using the Data Salary Calculator! Session has ended.')
     exit()
 
 bootstrap()

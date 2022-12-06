@@ -102,4 +102,5 @@ def generate(company, candidate, proposal):
     # save the pdf with name .pdf
     filename = pdfData['recipientName'] + pdfData['jobTitle'] + "Proposal.pdf"
     filename = filename.replace(" ", "")
+    print('PDF generated: ', filename)
     pdf.output(filename)

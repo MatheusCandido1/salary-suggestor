@@ -6,8 +6,6 @@ MID_LEVEL = 46865.08
 SENIOR_LEVEL = 82697
 EXECUTIVE_LEVEL = 135930.3
 
-RANGE = 5000
-
 # Define a function to get the company size values
 def get_company_size(employees):
   # Check if the employees are less than 50
@@ -55,8 +53,5 @@ def get_salary_suggestion(candidate, company):
     # Add the contract value to the salary
     salary += CONTRACT
 
-  # Return the salary range
-  return {
-    'min': salary - RANGE,
-    'max': salary + RANGE
-  }
+  # Return the suggested salary
+  return salary

@@ -17,11 +17,11 @@ def show(companyId):
 # Define a function to update a company receiving a company object
 def update(company):
   # Define the query to update a company
-  sql = "UPDATE companies SET name = %s, address = %s WHERE id = %s"
+  query = "UPDATE companies SET name = %s, address = %s WHERE id = %s"
   # Define the values to update a company
   val = (company['name'], company['address'], company['id'])
   # Execute the query
-  connect.cursor.execute(sql, val)
+  connect.cursor.execute(query, val)
   # Commit the changes
   connect.db.commit()
   # Print the message so the user knows the company has been updated

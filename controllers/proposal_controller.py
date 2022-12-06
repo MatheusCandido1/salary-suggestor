@@ -4,11 +4,11 @@ from database import connect
 # Define a function to store a proposal receiving a proposal object
 def store(proposal):
   # Define the query to insert a proposal
-  sql = "INSERT INTO proposals (candidate_id, job_title, salary, status) VALUES (%s, %s, %s, %s)"
+  query = "INSERT INTO proposals (candidate_id, job_title, salary, status) VALUES (%s, %s, %s, %s)"
   # Define the values to insert a proposal
   values = tuple(proposal.values())
   # Execute the query
-  connect.cursor.execute(sql, values)
+  connect.cursor.execute(query, values)
   # Commit the changes
   connect.db.commit()
   # Print the message so the user knows the proposal has been created
@@ -17,7 +17,8 @@ def store(proposal):
 # Define a function to get all proposals
 def index():
   # Define the query to get all proposals
-  connect.cursor.execute("SELECT * FROM proposals")
+  query = "SELECT proposals.id as proposal_id, candidate_id, proposal_date, job_title, salary, status, name, address, experience_level, employment_type FROM proposals INNER JOIN candidates ON proposals.candidate_id = candidates.id"
+  connect.cursor.execute(query)
   # Fetch all the proposals
   result = connect.cursor.fetchall()
   # Return the result
@@ -26,11 +27,11 @@ def index():
 # Define a function to get a proposal by id receiving a proposalId
 def show(proposalId):
   # Define the query to get a proposal by id
-  sql = "SELECT proposals.id as proposal_id, candidate_id, proposal_date, job_title, salary, status, name, address, experience_level, employment_type FROM proposals INNER JOIN candidates ON proposals.candidate_id = candidates.id WHERE proposals.id = %s"
+  query = "SELECT proposals.id as proposal_id, candidate_id, proposal_date, job_title, salary, status, name, address, experience_level, employment_type FROM proposals INNER JOIN candidates ON proposals.candidate_id = candidates.id WHERE proposals.id = %s"
   # Define the value to get a proposal by id
   val = (proposalId,)
   # Execute the query
-  connect.cursor.execute(sql, val)
+  connect.cursor.execute(query, val)
   # Fetch the proposal result
   result = connect.cursor.fetchone()
   # Return the result

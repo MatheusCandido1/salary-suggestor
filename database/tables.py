@@ -1,3 +1,7 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
 # Import the cursor from connect.py
 from connect import cursor
 

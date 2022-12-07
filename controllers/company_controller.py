@@ -1,3 +1,7 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
 # Import the connect.py file from the database folder
 from database import connect
 
@@ -26,3 +30,4 @@ def update(company):
   connect.db.commit()
   # Print the message so the user knows the company has been updated
   print('Company information updated!')
+  print('To see the changes, pleaase restart the sofwtare.')

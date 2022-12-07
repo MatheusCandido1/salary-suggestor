@@ -1,3 +1,7 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
 import numpy as np # importing numpy and pandas
 import pandas as pd
 

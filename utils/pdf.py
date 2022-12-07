@@ -1,3 +1,7 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
 # Python program to create
 # a pdf file
 from fpdf import FPDF
@@ -109,7 +113,7 @@ def generate(company, candidate, proposal):
     pdf.cell(180, 5, txt = pdfData['companyName'] ,ln = 2)
     pdf.cell(180, 5, txt = pdfData['companyAddress'] + ", " + pdfData['city'] ,ln = 2)
     # save the pdf with name .pdf
-    filename = pdfData['recipientName'] + pdfData['jobTitle'] + "Proposal.pdf"
+    filename = pdfData['recipientName'] + "Proposal.pdf"
     filename = filename.replace(" ", "")
     print('PDF generated: ', filename)
     pdf.output(filename)

@@ -1,3 +1,7 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
 # Import the connect.py file from the database folder
 from database import connect
 
@@ -40,7 +44,7 @@ def show(proposalId):
 # Define a function to update a proposal receiving a proposal object
 def update(proposal):
   # Define the query to update a proposal
-  query = "UPDATE proposals SET candidate_id = %s, proposal_date = %s, job_title = %s, salary = %s, status = %s WHERE id = %s"
+  query = "UPDATE proposals SET candidate_id = %s, job_title = %s, salary = %s, status = %s WHERE id = %s"
   # Define the values to update a proposal
   attrs = list(proposal.values())
   # Save the proposalId

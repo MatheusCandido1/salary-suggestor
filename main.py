@@ -8,6 +8,11 @@ from controllers import company_controller, candidate_controller, proposal_contr
 from utils import suggestor, pdf, statistics
 import re
 
+  # Define the master company
+companyId = 1
+  # Get the master company information from the database
+masterCompany = company_controller.show(companyId)
+
 # Define funciton to clear the terminal based on the OS
 def clear_terminal():
   # For Windows
@@ -23,10 +28,6 @@ def validate_hex_color(color):
     return True
   else:
     return False
-# Define the master company
-companyId = 3
-# Get the master company information from the database
-masterCompany = company_controller.show(companyId)
 
 # CANDIDATES
 # Define funciton to get experience level label
@@ -565,17 +566,17 @@ def update_existing_proposal():
   if currentProposal:
     # Print the proposal information
     print('\nSelected Proposal Information: ')
-    print('ID: '.ljust(18), currentProposal[1])
+    print('Proposal ID: '.ljust(18), currentProposal[0])
+    print('Candidate ID: '.ljust(18), currentProposal[1])
     print('Proposal Date: '.ljust(18), currentProposal[2].strftime("%B %d, %Y"))
     print('Job Title: '.ljust(18), currentProposal[3])
-    print('Salary Offered: '.ljust(18), currentProposal[4])
+    print('Salary Offered: '.ljust(18), format_salary(currentProposal[4]))
     print('Status: '.ljust(18), currentProposal[5])
 
     # Create a dictionary with the current proposal information
     updatedProposal = {
       'id': currentProposal[0],
       'candidate_id': currentProposal[1],
-      'proposal_date': currentProposal[2],
       'job_title': currentProposal[3],
       'salary': currentProposal[4],
       'status': currentProposal[5]
@@ -584,7 +585,6 @@ def update_existing_proposal():
     # Get the updated proposal information
     # If the user doesn't want to update a field, the current value will be used
     # If the user wants to update a field, the new value will be used
-    updatedProposal['proposal_date'] = input("Proposal Date: (press enter if you don't want to update) ") or currentProposal[2]
     updatedProposal['job_title'] = input("Job Title: (press enter if you don't want to update) ") or currentProposal[3]
     updatedProposal['salary'] = input("Salary: (press enter if you don't want to update) ") or currentProposal[4]
     print("If updating proposals's status, please enter appropriate option:")

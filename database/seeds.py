@@ -1,3 +1,7 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
 # Import connect from connect.py
 import connect
 # Import Faker
@@ -108,8 +112,31 @@ def candidates_seeder():
     )
     # Execute the query
     connect.cursor.execute(query, value)
-    # Commit the changes
-    connect.db.commit()
+  # Define the values for Deion Sanders
+  candidateDeion = (
+    'Deion Sanders',
+    faker.street_address(),
+    'deionsanders@email', 
+    faker.numerify(text='###-###-####'),
+    'SE',
+    'FT',
+  )
+  # Execute the query
+  connect.cursor.execute(query, candidateDeion)
+
+  # Define the values for Lauren Mitchell
+  candidateLauren = (
+    'Lauren Mitchell',
+    faker.street_address(),
+    'laurenmitchell@email',
+    faker.numerify(text='###-###-####'),
+    'MI',
+    'CT',
+  )
+  # Execute the query
+  connect.cursor.execute(query, candidateLauren)
+  # Commit the changes
+  connect.db.commit()
     
   # Print the message so the user knows the database has been populated
   print('Candidates created successfully.')

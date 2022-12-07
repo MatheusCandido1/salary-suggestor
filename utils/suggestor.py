@@ -1,3 +1,8 @@
+"""
+* Author: Matheus Carvalho, Amber Upton, Fatima Gonzales, Javier Segura, Sweastik Pokhrel
+* Date: 12-06-2022
+"""
+
 INITIAL_VALUE = 68238.97
 LARGE_COMPANY = 26558.22
 SMALL_COMPANY = 10393.38
